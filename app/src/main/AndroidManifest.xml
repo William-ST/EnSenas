@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="me.doapps.essenas">
 
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <application
         tools:replace="icon"
         android:allowBackup="true"

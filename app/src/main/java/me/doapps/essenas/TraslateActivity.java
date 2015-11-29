@@ -222,7 +222,7 @@ public class TraslateActivity extends AppCompatActivity implements RecognitionLi
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            updateLayout(phrase.get(count));
+                            updateLayout(phrase.get(0));
                         }
                     });
                     count++;
