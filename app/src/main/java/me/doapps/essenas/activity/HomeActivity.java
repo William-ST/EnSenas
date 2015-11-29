@@ -26,7 +26,6 @@ public class HomeActivity extends AppCompatActivity {
 
     final String TAG = HomeActivity.class.getSimpleName();
     RecyclerView recyclerView;
-    RecyclerView.LayoutManager layout_manager;
     RecordAdapter adapter;
     List<Record> recordList = new ArrayList<>();
     PreferencesUtil preferencesUtil;
@@ -69,7 +68,7 @@ public class HomeActivity extends AppCompatActivity {
 
         adapter = new RecordAdapter(recordList, HomeActivity.this);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(layout_manager);
+        recyclerView.setLayoutManager(new LinearLayoutManager(HomeActivity.this));
 
         seekBarSpeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
