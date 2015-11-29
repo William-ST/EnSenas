@@ -47,6 +47,12 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
+        linearLayoutOption03.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MenuActivity.this, HomeActivity.class));
+            }
+        });
 
     }
 }
