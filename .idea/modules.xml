@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/EsSenas.iml" filepath="$PROJECT_DIR$/EsSenas.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AndroidAnimations/AndroidAnimations.iml" filepath="$PROJECT_DIR$/AndroidAnimations/AndroidAnimations.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EnSenas.iml" filepath="$PROJECT_DIR$/EnSenas.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

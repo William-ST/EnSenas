@@ -7,8 +7,17 @@ import android.speech.SpeechRecognizer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class TraslateActivity extends AppCompatActivity implements RecognitionListener {
 
@@ -16,20 +25,67 @@ public class TraslateActivity extends AppCompatActivity implements RecognitionLi
     public static SpeechRecognizer speech = null;
     public static Intent recognizerIntent;
 
+    private List<String> phrase;
+    private TextView textPhrase;
+    private LinearLayout linearImages;
+    private boolean isConnected = false;
+    private int count = 0;
+    private HashMap<String, Integer> mapAlphabet;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_traslate);
 
+        textPhrase = (TextView) findViewById(R.id.textPhrase);
+        linearImages = (LinearLayout) findViewById(R.id.linearImages);
+
+        phrase = new ArrayList<>();
+        mapAlphabet = new HashMap<>();
+
+        mapAlphabet.put("a", R.mipmap.a);
+        mapAlphabet.put("b", R.mipmap.b);
+        mapAlphabet.put("c", R.mipmap.c);
+        mapAlphabet.put("d", R.mipmap.d);
+        mapAlphabet.put("e", R.mipmap.e);
+        mapAlphabet.put("f", R.mipmap.f);
+        mapAlphabet.put("g", R.mipmap.g);
+        mapAlphabet.put("h", R.mipmap.h);
+        mapAlphabet.put("i", R.mipmap.i);
+        mapAlphabet.put("j", R.mipmap.j);
+        mapAlphabet.put("k", R.mipmap.k);
+        mapAlphabet.put("l", R.mipmap.l);
+        mapAlphabet.put("m", R.mipmap.m);
+        mapAlphabet.put("n", R.mipmap.n);
+        mapAlphabet.put("ñ", R.mipmap.enie);
+        mapAlphabet.put("o", R.mipmap.o);
+        mapAlphabet.put("p", R.mipmap.p);
+        mapAlphabet.put("q", R.mipmap.q);
+        mapAlphabet.put("r", R.mipmap.r);
+        mapAlphabet.put("s", R.mipmap.s);
+        mapAlphabet.put("t", R.mipmap.t);
+        mapAlphabet.put("u", R.mipmap.u);
+        mapAlphabet.put("v", R.mipmap.v);
+        mapAlphabet.put("w", R.mipmap.w);
+        mapAlphabet.put("x", R.mipmap.x);
+        mapAlphabet.put("y", R.mipmap.y);
+        mapAlphabet.put("z", R.mipmap.z);
+
+
+        /*for (int i = 0; i < 20; i++) {
+            phrase.add("Este es un ejemplo #" + i);
+        }*/
+
         speech = SpeechRecognizer.createSpeechRecognizer(this);
         speech.setRecognitionListener(this);
-        recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);;
+        recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "es");
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, this.getPackageName());
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
 
-
+        speech.startListening(recognizerIntent);
     }
 
     @Override
@@ -43,7 +99,7 @@ public class TraslateActivity extends AppCompatActivity implements RecognitionLi
         try {
             speech.cancel();
             speech.destroy();
-        } catch (Exception e){
+        } catch (Exception e) {
             Log.e(TAG, "onDestroy() " + e.toString());
         }
     }
@@ -102,7 +158,10 @@ public class TraslateActivity extends AppCompatActivity implements RecognitionLi
         Log.e(TAG, "onResults");
         ArrayList<String> matches = results
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-        String text = "";
+        String text = matches.get(0).toString();
+
+        phrase.add(text);
+        showingText();
 
 //        returnedText.setText(matches.get(0).toString());
 //        toggleButton.performClick();
@@ -149,5 +208,65 @@ public class TraslateActivity extends AppCompatActivity implements RecognitionLi
                 break;
         }
         return message;
+    }
+
+    /**
+     * Thread
+     **/
+    private void showingText() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (!isConnected) {
+                    Log.e("count", count + "");
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            updateLayout(phrase.get(count));
+                        }
+                    });
+                    count++;
+                    if (count == phrase.size() - 1) {
+                        Log.e("end", count + "");
+                        phrase.clear();
+                        isConnected = true;
+                    }
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+    }
+
+    /**
+     * Methods
+     **/
+    private void updateLayout(String content) {
+        textPhrase.setText(content);
+        for (int i = 0; i < content.length(); i++) {
+            ImageView tempImage = new ImageView(TraslateActivity.this);
+            Log.e("charrr", String.valueOf(content.charAt(i)));
+            try {
+                tempImage.setImageResource(mapAlphabet.get(String.valueOf(content.charAt(i))));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            tempImage.setLayoutParams(new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            ));
+            linearImages.addView(tempImage);
+        }
+
+        YoYo.with(Techniques.SlideOutLeft)
+                .duration(2500)
+                .playOn(linearImages);
+
+        YoYo.with(Techniques.SlideOutLeft)
+                .duration(2500)
+                .playOn(textPhrase);
     }
 }
