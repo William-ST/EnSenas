@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.TraslateActivity"
+            android:name=".TraslateActivity"
             android:screenOrientation="landscape" />
         <activity android:name=".activity.HomeActivity"
             android:screenOrientation="landscape">

@@ -1,6 +1,9 @@
-package me.doapps.essenas.activity;
+package me.doapps.essenas;
 
 import android.content.Intent;
+import android.media.Image;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -14,6 +17,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -22,8 +26,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import me.doapps.essenas.R;
-import me.doapps.essenas.utils.FontUtils;
+import me.doapps.essenas.activity.MenuActivity;
+import me.doapps.essenas.utils.PreferencesUtil;
 
 
 public class TraslateActivity extends AppCompatActivity implements RecognitionListener, View.OnClickListener {
@@ -32,15 +36,25 @@ public class TraslateActivity extends AppCompatActivity implements RecognitionLi
     public static SpeechRecognizer speech = null;
     public static Intent recognizerIntent;
 
-    private List<String> phrase;
-    private TextView textPhrase;
+    private TextView textPhrase, textTimer;
     private LinearLayout linearImages, linearText;
-    private ImageView imgBack;
-    private boolean isConnected = false;
-    private int count = 0;
-    private HashMap<String, Integer> mapAlphabet;
+    private ImageView imgBack, imgRecord, imgStop;
 
+    private List<String> phrase;
+    private HashMap<String, Integer> mapAlphabet;
+    private String recordPhrase;
+
+    private boolean isConnected = false;
+    private boolean isRecord = false;
+    private int count = 0;
     private int type;
+    private long timeInMilliseconds = 0L;
+    private long timeSwapBuff = 0L;
+    private long updatedTime = 0L;
+    private long startTime = 0L;
+    private Handler customHandler = new Handler();
+    PreferencesUtil preferencesUtil;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,14 +77,18 @@ public class TraslateActivity extends AppCompatActivity implements RecognitionLi
         );
 
         textPhrase = (TextView) findViewById(R.id.textPhrase);
+        textTimer = (TextView) findViewById(R.id.textTimer);
         imgBack = (ImageView) findViewById(R.id.imgBack);
-
-        textPhrase.setTypeface(FontUtils.getFiraSansMedium(TraslateActivity.this));
+        imgRecord = (ImageView) findViewById(R.id.imgRecord);
+        imgStop = (ImageView) findViewById(R.id.imgStop);
 
         imgBack.setOnClickListener(this);
+        imgRecord.setOnClickListener(this);
+        imgStop.setOnClickListener(this);
 
         phrase = new ArrayList<>();
         mapAlphabet = new HashMap<>();
+        preferencesUtil = new PreferencesUtil(TraslateActivity.this);
 
         mapAlphabet.put("a", R.mipmap.a);
         mapAlphabet.put("b", R.mipmap.b);
@@ -99,11 +117,6 @@ public class TraslateActivity extends AppCompatActivity implements RecognitionLi
         mapAlphabet.put("x", R.mipmap.x);
         mapAlphabet.put("y", R.mipmap.y);
         mapAlphabet.put("z", R.mipmap.z);
-
-
-        /*for (int i = 0; i < 20; i++) {
-            phrase.add("Este es un ejemplo #" + i);
-        }*/
 
         speech = SpeechRecognizer.createSpeechRecognizer(this);
         speech.setRecognitionListener(this);
@@ -163,8 +176,6 @@ public class TraslateActivity extends AppCompatActivity implements RecognitionLi
     public void onError(int errorCode) {
         String errorMessage = getErrorText(errorCode);
         Log.e(TAG, "FAILED " + errorMessage);
-//        returnedText.setText(errorMessage);
-//        toggleButton.setChecked(false);
     }
 
     @Override
@@ -190,10 +201,8 @@ public class TraslateActivity extends AppCompatActivity implements RecognitionLi
         String text = matches.get(0).toString();
 
         phrase.add(text);
+        isConnected = false;
         showingText();
-
-//        returnedText.setText(matches.get(0).toString());
-//        toggleButton.performClick();
     }
 
     @Override
@@ -248,27 +257,38 @@ public class TraslateActivity extends AppCompatActivity implements RecognitionLi
             public void run() {
                 while (!isConnected) {
                     Log.e("count", count + "");
+                    Log.e("data", phrase.get(count));
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            updateLayout(phrase.get(0));
+                            try {
+                                updateLayout(phrase.get(count));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
                         }
                     });
-                    count++;
-                    if (count == phrase.size() - 1) {
-                        Log.e("end", count + "");
-                        phrase.clear();
-                        isConnected = true;
-                    }
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
                 }
             }
         }).start();
     }
+
+    private Runnable updateTimerThread = new Runnable() {
+        public void run() {
+            timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
+            updatedTime = timeSwapBuff + timeInMilliseconds;
+            int secs = (int) (updatedTime / 1000);
+            int mins = secs / 60;
+            secs = secs % 60;
+            int milliseconds = (int) (updatedTime % 1000);
+            textTimer.setText("" + mins + ":"
+                    + String.format("%02d", secs) + ":"
+                    + String.format("%02d", milliseconds));
+            customHandler.postDelayed(this, 0);
+        }
+    };
+
 
     /**
      * Methods
@@ -285,22 +305,56 @@ public class TraslateActivity extends AppCompatActivity implements RecognitionLi
             }
             tempImage.setLayoutParams(new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
+                    ViewGroup.LayoutParams.MATCH_PARENT
             ));
             linearImages.addView(tempImage);
         }
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         YoYo.with(Techniques.SlideOutLeft)
-                .duration(2500)
+                .duration(preferencesUtil.getSpeedConfig())
                 .playOn(linearImages);
 
         YoYo.with(Techniques.SlideOutLeft)
-                .duration(2500)
+                .duration(preferencesUtil.getSpeedConfig())
                 .playOn(textPhrase);
+        count++;
+        isConnected = true;
+        speech.startListening(recognizerIntent);
     }
 
     @Override
     public void onClick(View view) {
-        finish();
+        switch (view.getId()) {
+            case R.id.imgBack:
+                finish();
+                break;
+            case R.id.imgRecord:
+                if (!isRecord) {
+                    isRecord = true;
+                    startTime = SystemClock.uptimeMillis();
+                    customHandler.postDelayed(updateTimerThread, 0);
+                    imgRecord.setVisibility(View.GONE);
+                    imgStop.setVisibility(View.VISIBLE);
+                    textTimer.setVisibility(View.VISIBLE);
+                    YoYo.with(Techniques.Flash)
+                            .duration(1000)
+                            .playOn(imgStop);
+                }
+                break;
+            case R.id.imgStop:
+                //timeSwapBuff += timeInMilliseconds;
+                customHandler.removeCallbacks(updateTimerThread);
+                isRecord = false;
+                imgStop.setVisibility(View.GONE);
+                imgRecord.setVisibility(View.VISIBLE);
+                textTimer.setVisibility(View.GONE);
+                Toast.makeText(TraslateActivity.this, "Párrafo guardado con éxito", Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 }

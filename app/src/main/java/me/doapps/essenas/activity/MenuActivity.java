@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import me.doapps.essenas.R;
+import me.doapps.essenas.TraslateActivity;
 import me.doapps.essenas.utils.PreferencesUtil;
 
 public class MenuActivity extends AppCompatActivity {

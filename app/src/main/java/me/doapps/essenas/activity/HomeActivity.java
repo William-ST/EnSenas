@@ -94,6 +94,24 @@ public class HomeActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         Log.e(TAG, "save "+seekBarSpeed.getProgress());
-        preferencesUtil.setSpeedConfig(seekBarSpeed.getProgress());
+        int tempSpeed = 3000;
+        switch (seekBarSpeed.getProgress()){
+            case 0:
+                tempSpeed = 5000;
+                break;
+            case 1:
+                tempSpeed = 4000;
+                break;
+            case 2:
+                tempSpeed = 3000;
+                break;
+            case 3:
+                tempSpeed = 2000;
+                break;
+            case 4:
+                tempSpeed = 1000;
+                break;
+        }
+        preferencesUtil.setSpeedConfig(tempSpeed);
     }
 }

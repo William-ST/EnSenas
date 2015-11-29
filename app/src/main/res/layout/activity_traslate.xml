@@ -40,11 +40,21 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/imgRecord"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:src="@mipmap/record_button" />
 
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/imgStop"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/record_play_button" />
+
         <TextView
+            android:visibility="gone"
+            android:id="@+id/textTimer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="30dp"
