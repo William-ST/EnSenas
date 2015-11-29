@@ -19,12 +19,12 @@ public class Record {
     private String time;
 
     @DatabaseField(canBeNull = false)
-    private String state;
+    private boolean state;
 
     public Record() {
     }
 
-    public Record(String date, String time, String state) {
+    public Record(String date, String time, boolean state) {
         this.date = date;
         this.time = time;
         this.state = state;
@@ -50,11 +50,11 @@ public class Record {
         this.time = time;
     }
 
-    public String getState() {
+    public boolean isState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(boolean state) {
         this.state = state;
     }
 }

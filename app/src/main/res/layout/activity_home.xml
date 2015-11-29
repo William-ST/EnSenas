@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/gen_yelow"
+    android:orientation="vertical"
     android:padding="5dp">
 
     <LinearLayout
@@ -23,32 +23,49 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:paddingLeft="25dp"
-        android:paddingRight="35dp"
-        android:orientation="vertical">
+        android:paddingRight="35dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
-            android:textColor="@color/gen_black"
-            android:text="VELOCIDAD" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="VELOCIDAD"
+                android:textColor="@color/gen_black"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/text_view_index"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(3)"
+                android:textColor="@color/gen_black"
+                android:textSize="30dp"
+                android:layout_marginLeft="10dp"/>
+
+        </LinearLayout>
 
         <SeekBar
             android:id="@+id/seek_bar_speed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:max="5"/>
-w
+            android:layout_marginTop="10dp"
+            android:max="4"
+            android:progress="2"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
-            android:textColor="@color/gen_black"
+            android:layout_marginBottom="10dp"
             android:text="GRABACIONES"
-            android:layout_marginBottom="10dp"/>
+            android:textColor="@color/gen_black"
+            android:textSize="30dp" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recordList"

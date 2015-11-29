@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import me.doapps.essenas.R;
+import me.doapps.essenas.utils.PreferencesUtil;
 
 public class MenuActivity extends AppCompatActivity {
     LinearLayout linearLayoutOption01, linearLayoutOption02, linearLayoutOption03;
@@ -20,6 +21,8 @@ public class MenuActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+
 
         getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -53,6 +56,8 @@ public class MenuActivity extends AppCompatActivity {
                 startActivity(new Intent(MenuActivity.this, HomeActivity.class));
             }
         });
+
+
 
     }
 }

@@ -2,6 +2,7 @@ package me.doapps.essenas.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.SeekBar;
 
 /**
  * Created by William_ST on 29/11/15.
@@ -29,6 +30,6 @@ public class PreferencesUtil {
     }
 
     public int getSpeedConfig(){
-        return preferences.getInt(DATA_CONFIG, 3);
+        return preferences.getInt(DATA_CONFIG, 2);
     }
 }

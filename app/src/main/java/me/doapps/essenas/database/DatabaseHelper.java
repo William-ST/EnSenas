@@ -40,6 +40,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(source, Alphabet.class);
             TableUtils.createTable(source, Record.class);
             TableUtils.createTable(source, RecordDetail.class);
+
+            getRecordDao().create(new Record("10/10 10:10", "10:10", true));
         } catch(SQLException e){
             Log.e(TAG, "onCreate "+e.toString());
         }
