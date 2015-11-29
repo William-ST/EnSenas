@@ -1,5 +1,6 @@
 package me.doapps.essenas;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Handler;
@@ -53,8 +54,9 @@ public class TraslateActivity extends AppCompatActivity implements RecognitionLi
     private long updatedTime = 0L;
     private long startTime = 0L;
     private Handler customHandler = new Handler();
-    PreferencesUtil preferencesUtil;
-
+    private PreferencesUtil preferencesUtil;
+    private ImageView imageViewDots;
+    public static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +64,11 @@ public class TraslateActivity extends AppCompatActivity implements RecognitionLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_traslate);
 
+        context = TraslateActivity.this;
+
         linearImages = (LinearLayout) findViewById(R.id.linearImages);
         linearText = (LinearLayout) findViewById(R.id.linearText);
+        imageViewDots = (ImageView) findViewById(R.id.image_view_dots);
 
         type = getIntent().getExtras().getInt(MenuActivity.TYPE);
         if (type == 1)
@@ -175,7 +180,14 @@ public class TraslateActivity extends AppCompatActivity implements RecognitionLi
     @Override
     public void onError(int errorCode) {
         String errorMessage = getErrorText(errorCode);
-        Log.e(TAG, "FAILED " + errorMessage);
+//        if(errorMessage.equals("No match")){
+//
+//        }
+        Toast.makeText(TraslateActivity.this, "No pudimos interpretar su mensaje", Toast.LENGTH_SHORT).show();
+        speech.cancel();
+        speech.startListening(recognizerIntent);
+//        Log.e(TAG, "FAILED AQUI" + errorMessage);
+
     }
 
     @Override
@@ -191,16 +203,22 @@ public class TraslateActivity extends AppCompatActivity implements RecognitionLi
     @Override
     public void onReadyForSpeech(Bundle arg0) {
         Log.e(TAG, "onReadyForSpeech");
+        imageViewDots.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onResults(Bundle results) {
         Log.e(TAG, "onResults");
+        imageViewDots.setVisibility(View.GONE);
         ArrayList<String> matches = results
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
         String text = matches.get(0).toString();
 
         phrase.add(text);
+        Log.e(TAG, "RESPUESTA: " + text);
+
+//FAILED No match
+
         isConnected = false;
         showingText();
     }
@@ -223,6 +241,7 @@ public class TraslateActivity extends AppCompatActivity implements RecognitionLi
                 break;
             case SpeechRecognizer.ERROR_NETWORK:
                 message = "Network error";
+                Toast.makeText(context, "Problema de red", Toast.LENGTH_SHORT).show();
                 break;
             case SpeechRecognizer.ERROR_NETWORK_TIMEOUT:
                 message = "Network timeout";
@@ -256,8 +275,8 @@ public class TraslateActivity extends AppCompatActivity implements RecognitionLi
             @Override
             public void run() {
                 while (!isConnected) {
-                    Log.e("count", count + "");
-                    Log.e("data", phrase.get(count));
+//                    Log.e("count", count + "");
+//                    Log.e("data", phrase.get(count));
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -297,7 +316,7 @@ public class TraslateActivity extends AppCompatActivity implements RecognitionLi
         textPhrase.setText(content);
         for (int i = 0; i < content.length(); i++) {
             ImageView tempImage = new ImageView(TraslateActivity.this);
-            Log.e("charrr", String.valueOf(content.charAt(i)));
+//            Log.e("charrr", String.valueOf(content.charAt(i)));
             try {
                 tempImage.setImageResource(mapAlphabet.get(String.valueOf(content.charAt(i))));
             } catch (Exception e) {

@@ -2,8 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/gen_yelow"
+    android:orientation="vertical"
     android:padding="5dp">
 
     <LinearLayout
@@ -18,25 +18,63 @@
             android:layout_height="match_parent"
             android:padding="5dp"
             android:src="@mipmap/back_button" />
+
     </LinearLayout>
 
 
     <LinearLayout
-        android:visibility="gone"
-        android:id="@+id/linearImages"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal"
-        android:layout_marginTop="100dp"
-        android:padding="20dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/linearImages"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="100dp"
+            android:orientation="horizontal"
+            android:padding="20dp"
+            android:visibility="gone">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="visible"
+            android:id="@+id/linearText"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginTop="100dp"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/textPhrase"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:text="Lorem ipsum"
+                android:textColor="@color/gen_black"
+                android:textSize="60dp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/image_view_dots"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/dots_sprite"
+            android:visibility="gone"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:gravity="center_vertical"
         android:layout_gravity="center_horizontal|bottom"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <ImageView
@@ -46,42 +84,20 @@
             android:src="@mipmap/record_button" />
 
         <ImageView
-            android:visibility="gone"
             android:id="@+id/imgStop"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:src="@mipmap/record_play_button" />
+            android:src="@mipmap/record_play_button"
+            android:visibility="gone" />
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/textTimer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="00:10:34"
+            android:textColor="@color/gen_black"
             android:textSize="30dp"
-            android:textColor="@color/gen_black"
-            android:text="00:10:34"/>
+            android:visibility="gone" />
     </LinearLayout>
-
-    <LinearLayout
-        android:visibility="gone"
-        android:id="@+id/linearText"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:gravity="center_vertical"
-        android:layout_gravity="center_horizontal|top"
-        android:layout_marginTop="100dp"
-        android:padding="10dp">
-
-        <TextView
-            android:id="@+id/textPhrase"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:text="Lorem ipsum"
-            android:textColor="@color/gen_black"
-            android:textSize="60dp" />
-    </LinearLayout>
-
 
 </FrameLayout>
