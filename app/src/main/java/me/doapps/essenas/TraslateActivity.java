@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,18 +29,26 @@ public class TraslateActivity extends AppCompatActivity implements RecognitionLi
 
     private List<String> phrase;
     private TextView textPhrase;
-    private LinearLayout linearImages;
+    private LinearLayout linearImages, linearText;
     private boolean isConnected = false;
     private int count = 0;
     private HashMap<String, Integer> mapAlphabet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_traslate);
 
+
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+        );
+
         textPhrase = (TextView) findViewById(R.id.textPhrase);
         linearImages = (LinearLayout) findViewById(R.id.linearImages);
+        linearText = (LinearLayout) findViewById(R.id.linearText);
 
         phrase = new ArrayList<>();
         mapAlphabet = new HashMap<>();
