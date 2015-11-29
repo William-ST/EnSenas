@@ -9,8 +9,9 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 public class MenuActivity extends AppCompatActivity {
-
     LinearLayout linearLayoutOption01, linearLayoutOption02, linearLayoutOption03;
+    public static String TYPE = "type";
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,8 @@ public class MenuActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
         );
 
+        intent = new Intent(MenuActivity.this, TraslateActivity.class);
+
         linearLayoutOption01 = (LinearLayout) findViewById(R.id.linear_layout_option01);
         linearLayoutOption02 = (LinearLayout) findViewById(R.id.linear_layout_option02);
         linearLayoutOption03 = (LinearLayout) findViewById(R.id.linear_layout_option03);
@@ -30,7 +33,15 @@ public class MenuActivity extends AppCompatActivity {
         linearLayoutOption01.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MenuActivity.this, TraslateActivity.class));
+                intent.putExtra(TYPE, 1);
+                startActivity(intent);
+            }
+        });
+        linearLayoutOption02.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                intent.putExtra(TYPE, 2);
+                startActivity(intent);
             }
         });
 

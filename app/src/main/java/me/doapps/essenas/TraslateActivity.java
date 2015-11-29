@@ -1,12 +1,14 @@
 package me.doapps.essenas;
 
 import android.content.Intent;
+import android.media.Image;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -21,7 +23,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class TraslateActivity extends AppCompatActivity implements RecognitionListener {
+
+public class TraslateActivity extends AppCompatActivity implements RecognitionListener, View.OnClickListener {
 
     private String TAG = TraslateActivity.class.getSimpleName();
     public static SpeechRecognizer speech = null;
@@ -30,9 +33,12 @@ public class TraslateActivity extends AppCompatActivity implements RecognitionLi
     private List<String> phrase;
     private TextView textPhrase;
     private LinearLayout linearImages, linearText;
+    private ImageView imgBack;
     private boolean isConnected = false;
     private int count = 0;
     private HashMap<String, Integer> mapAlphabet;
+
+    private int type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,14 @@ public class TraslateActivity extends AppCompatActivity implements RecognitionLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_traslate);
 
+        linearImages = (LinearLayout) findViewById(R.id.linearImages);
+        linearText = (LinearLayout) findViewById(R.id.linearText);
+
+        type = getIntent().getExtras().getInt(MenuActivity.TYPE);
+        if (type == 1)
+            linearText.setVisibility(View.VISIBLE);
+        else
+            linearImages.setVisibility(View.VISIBLE);
 
         getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -47,8 +61,10 @@ public class TraslateActivity extends AppCompatActivity implements RecognitionLi
         );
 
         textPhrase = (TextView) findViewById(R.id.textPhrase);
-        linearImages = (LinearLayout) findViewById(R.id.linearImages);
-        linearText = (LinearLayout) findViewById(R.id.linearText);
+        imgBack = (ImageView) findViewById(R.id.imgBack);
+
+
+        imgBack.setOnClickListener(this);
 
         phrase = new ArrayList<>();
         mapAlphabet = new HashMap<>();
@@ -278,5 +294,10 @@ public class TraslateActivity extends AppCompatActivity implements RecognitionLi
         YoYo.with(Techniques.SlideOutLeft)
                 .duration(2500)
                 .playOn(textPhrase);
+    }
+
+    @Override
+    public void onClick(View view) {
+        finish();
     }
 }

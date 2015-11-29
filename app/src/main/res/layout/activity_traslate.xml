@@ -13,8 +13,10 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:id="@+id/imgBack"
+            android:layout_width="70dp"
             android:layout_height="match_parent"
+            android:padding="5dp"
             android:src="@mipmap/back_button" />
     </LinearLayout>
 
@@ -38,7 +40,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:src="@mipmap/record_button" />
 
@@ -51,9 +53,10 @@
     </LinearLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/linearText"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="150dp"
         android:gravity="center_vertical"
         android:layout_gravity="center_horizontal|top"
         android:layout_marginTop="100dp"
@@ -67,7 +70,7 @@
             android:textStyle="bold"
             android:text="Lorem ipsum"
             android:textColor="@color/gen_black"
-            android:textSize="40dp" />
+            android:textSize="60dp" />
     </LinearLayout>
 
 
