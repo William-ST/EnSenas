@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import me.doapps.essenas.R;
+import me.doapps.essenas.utils.FontUtils;
 
 
 public class TraslateActivity extends AppCompatActivity implements RecognitionListener, View.OnClickListener {
@@ -64,6 +65,7 @@ public class TraslateActivity extends AppCompatActivity implements RecognitionLi
         textPhrase = (TextView) findViewById(R.id.textPhrase);
         imgBack = (ImageView) findViewById(R.id.imgBack);
 
+        textPhrase.setTypeface(FontUtils.getFiraSansMedium(TraslateActivity.this));
 
         imgBack.setOnClickListener(this);
 

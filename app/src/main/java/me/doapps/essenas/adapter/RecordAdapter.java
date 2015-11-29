@@ -12,6 +12,7 @@ import java.util.List;
 
 import me.doapps.essenas.R;
 import me.doapps.essenas.model.Record;
+import me.doapps.essenas.utils.FontUtils;
 
 /**
  * Created by William_ST on 29/11/15.
@@ -39,6 +40,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.CardsViewH
     public void onBindViewHolder(CardsViewHolder holder, final int position) {
         try {
             holder.textViewDate.setText(recordList.get(position).getDate());
+            holder.textViewDate.setTypeface(FontUtils.getFiraSansMedium(context));
         } catch (Exception e) {
             Log.e(TAG, e.toString());
         }

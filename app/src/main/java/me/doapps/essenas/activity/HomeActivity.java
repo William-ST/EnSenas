@@ -19,6 +19,7 @@ import me.doapps.essenas.R;
 import me.doapps.essenas.adapter.RecordAdapter;
 import me.doapps.essenas.database.DatabaseHelper;
 import me.doapps.essenas.model.Record;
+import me.doapps.essenas.utils.FontUtils;
 import me.doapps.essenas.utils.PreferencesUtil;
 
 public class HomeActivity extends AppCompatActivity {
@@ -30,7 +31,7 @@ public class HomeActivity extends AppCompatActivity {
     List<Record> recordList = new ArrayList<>();
     PreferencesUtil preferencesUtil;
     private SeekBar seekBarSpeed;
-    private TextView textViewIndex;
+    private TextView textViewIndex, textViewSpeed, textViewRecord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +41,12 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recordList);
         seekBarSpeed = (SeekBar) findViewById(R.id.seek_bar_speed);
         textViewIndex = (TextView) findViewById(R.id.text_view_index);
+        textViewSpeed = (TextView) findViewById(R.id.text_view_speed);
+        textViewRecord = (TextView) findViewById(R.id.text_view_record);
 
-        layout_manager = new LinearLayoutManager(HomeActivity.this);
+        textViewIndex.setTypeface(FontUtils.getFiraSansMedium(HomeActivity.this));
+        textViewSpeed.setTypeface(FontUtils.getFiraSansMedium(HomeActivity.this));
+        textViewRecord.setTypeface(FontUtils.getFiraSansMedium(HomeActivity.this));
 
         preferencesUtil = new PreferencesUtil(HomeActivity.this);
 
