@@ -8,7 +8,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp">
 
         <LinearLayout
             android:id="@+id/linear_layout_option01"
@@ -16,11 +18,18 @@
             android:layout_height="match_parent"
             android:layout_weight="10"
             android:clickable="true"
-            android:touchscreenBlocksFocus="true">
+            android:touchscreenBlocksFocus="true"
+            android:gravity="center"
+            android:background="@drawable/selector_button"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="2.5dp">
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:src="@mipmap/abc_button"
+                android:clickable="false"
+                android:padding="25dp"/>
 
         </LinearLayout>
 
@@ -30,11 +39,18 @@
             android:layout_height="match_parent"
             android:layout_weight="10"
             android:clickable="true"
-            android:touchscreenBlocksFocus="true">
+            android:touchscreenBlocksFocus="true"
+            android:gravity="center"
+            android:layout_marginLeft="2.5dp"
+            android:layout_marginRight="2.5dp"
+            android:background="@drawable/selector_button">
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:src="@mipmap/hands_button"
+                android:clickable="false"
+                android:padding="25dp"/>
 
         </LinearLayout>
 
@@ -44,11 +60,18 @@
             android:layout_height="match_parent"
             android:layout_weight="10"
             android:clickable="true"
-            android:touchscreenBlocksFocus="true">
+            android:touchscreenBlocksFocus="true"
+            android:gravity="center"
+            android:layout_marginLeft="2.5dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/selector_button">
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:src="@mipmap/home_button"
+                android:clickable="false"
+                android:padding="25dp"/>
 
         </LinearLayout>
     </LinearLayout>

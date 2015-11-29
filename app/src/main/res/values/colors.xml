@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="gen_yelow">#FFE200</color>
+    <color name="gen_yelow_pressed">#d1b200</color>
     <color name="color_option02">#FFFFFF</color>
     <color name="gen_black">#010101</color>
 </resources>
