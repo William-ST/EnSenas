@@ -1,7 +1,6 @@
-package me.doapps.essenas;
+package me.doapps.essenas.activity;
 
 import android.content.Intent;
-import android.media.Image;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -22,6 +21,8 @@ import com.daimajia.androidanimations.library.YoYo;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import me.doapps.essenas.R;
 
 
 public class TraslateActivity extends AppCompatActivity implements RecognitionListener, View.OnClickListener {

@@ -1,0 +1,76 @@
+#
+# generated on 2015/11/29 04:03:24
+#
+# --table-start--
+dataClass=me.doapps.essenas.model.Alphabet
+tableName=Alphabet
+# --table-fields-start--
+# --field-start--
+fieldName=idAlphabet
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=text
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=image
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=state
+canBeNull=false
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=me.doapps.essenas.model.Record
+tableName=Record
+# --table-fields-start--
+# --field-start--
+fieldName=idRecord
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=date
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=time
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=state
+canBeNull=false
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=me.doapps.essenas.model.RecordDetail
+tableName=RecordDetail
+# --table-fields-start--
+# --field-start--
+fieldName=idRecordDetail
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=record
+foreign=true
+foreignAutoRefresh=true
+maxForeignAutoRefreshLevel=3
+# --field-end--
+# --field-start--
+fieldName=alphabet
+foreign=true
+foreignAutoRefresh=true
+maxForeignAutoRefreshLevel=3
+# --field-end--
+# --field-start--
+fieldName=state
+canBeNull=false
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
